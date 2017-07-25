@@ -1,0 +1,114 @@
+﻿@model HotelMangement.Models.AccountRegistrationModel
+@{
+    ViewBag.Title = "AccountRegistraion";
+    
+
+}
+<head>
+    <style>
+        label {
+            width: 250px;
+        }
+        .form-control
+        {
+            display : inline;
+        }
+        
+        
+    </style>
+
+   
+
+</head>
+
+@using (Html.BeginForm())
+
+{
+    <div class="container">
+        <div class="panel-primary">
+            <div class="panel-heading" style="align-items: center">
+                <h3>Customer AccountRegistration</h3>
+            </div>
+            <div class="panel-body">
+
+                <div class="form-group">
+                    <h4>
+                        <label>
+                            FirstName
+                        </label>
+                        @Html.TextBoxFor(x => x.FirstName, new { placeholder = "Robert", @class = "form-control" })
+                    </h4>
+                </div>
+                <div class="form-group">
+                    <h4>
+                        <label>
+                            LastName
+                        </label>
+                        @Html.TextBoxFor(x => x.LastName, new { placeholder = "Downey", @class = "form-control" })
+                    </h4>
+                </div>
+                <div class="form-group">
+                    <h4>
+                        <label>
+                            UserId
+                        </label>
+                        @Html.TextBoxFor(x => x.Userid, new { placeholder = "Robert@mail.com",@class="form-control" })
+                    </h4>
+                </div>
+                <div class="form-group">
+                    <h4>
+                        <label>
+                            Password
+                        </label>
+                        @Html.TextBoxFor(x => x.Password, new { placeholder = "*********", @class = "form-control" })
+                    </h4>
+                </div>
+                <div class="form-group">
+                    <h4>
+                        <label>
+                            Conform Password
+                        </label>
+                        @Html.TextBoxFor(x => x.ConformPassword, new { placeholder = "*********", @class = "form-control" })
+                    </h4>
+                </div>
+
+                <div class="form-group">
+                    <h4>
+                        <label>
+                            Phone Number
+                        </label>
+
+
+                        @Html.TextBoxFor(x => x.PhoneNumber, new { placeholder = "6604418473", @class = "form-control" })
+                    </h4>
+
+                </div>
+               
+
+
+                <div class="form-group">
+
+                    <input id="btnSubmit" type="submit" value="Create Account" class="btn btn-default" />
+
+                    <input id="btnClear" type="button" value="Clear " class="btn btn-default" />
+
+                </div>
+               
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+
+
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+
+}
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+}

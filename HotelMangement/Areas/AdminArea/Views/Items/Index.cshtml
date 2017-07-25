@@ -1,0 +1,94 @@
+﻿@model IEnumerable<HotelManagement.Models.Models.Items>
+@using  System.Configuration
+
+@{
+    ViewBag.Title = "Index";
+
+}
+
+
+<script>
+    var webApiUrl = '@ConfigurationManager.AppSettings["HotelManagementWebApiUrl"]';
+    
+</script>
+<script src="~/Areas/AdminArea/Scripts/IndexScript.js"></script>
+<style>
+    .form-control {
+        display: inline;
+        width: 100%;
+        height: 34px;
+        padding: 6px 6px;
+        font-size: 14px;
+    }
+</style>
+<script>
+    $(function () {
+
+        $('#txtSearch').change(function () {
+            sessionStorage.setItem('txtSearchValue', this.value);
+
+        })
+        $('#searchLink').on('click', function () {
+            var link = $('#searchLink').attr('href');
+            link += '?itemName=' + sessionStorage.getItem('txtSearchValue');
+            $('#searchLink').attr('href', link);
+        })
+
+
+
+
+    if (new URL(window.location).pathname.includes('SearchItems')) {
+        $('<a href="@Url.Action("Index","Items",new { area="AdminArea"},"http")"><i class="fa fa-arrow-circle-left fa-2x"></i></a><br/>').insertAfter('#indexHeader');
+    }
+    })
+</script>
+
+
+<h2 id="indexHeader">Index</h2>
+
+Filter by :  @Html.DropDownList("MenuDetails", new SelectList(ViewBag.MenuDetails), "None", new { @class = "form-control", id = "ddlDetails", onchange = "filterItemsByMenuType()" })
+Search Items :  @Html.TextBox("searchTextBox", null, new { @class = "form-control", id = "txtSearch" })
+<a href='@Url.Action("SearchItems","Items",new { area="AdminArea"},"http")' id="searchLink" class="btn btn-success">SEARCH <i class="fa fa-search"></i></a>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table" id="Items">
+    <tr class="success">
+        <th>
+            @Html.DisplayNameFor(model => model.Menu.MenuDetails)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+            
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Menu.MenuDetails)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ItemId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ItemId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ItemId })
+            </td>
+        </tr>
+    }
+
+</table>
+
+@using PagedList.Mvc
+
+@Html.PagedListPager(ViewBag.OnePageItem as PagedList.IPagedList,page=>Url.Action("Index",new { page}))
